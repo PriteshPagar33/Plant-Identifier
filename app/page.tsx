@@ -1,6 +1,6 @@
 // page.tsx
 'use client'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useState } from 'react'
 import ImageUpload from './components/ImageUpload'
 import PlantInfo from './components/PlantInfo'
@@ -31,6 +31,7 @@ export default function Home() {
       <main className="max-w-5xl w-full p-8 mb-12">
         <ImageUpload setPlantInfo={setPlantInfo} setUploadedImage={setUploadedImage} />
         <HowToUse />
+        <SpeedInsights />
         {uploadedImage && (
           <div className="mt-8">
             <h2 className="text-2xl font-bold text-black mb-4">Uploaded Image</h2>
