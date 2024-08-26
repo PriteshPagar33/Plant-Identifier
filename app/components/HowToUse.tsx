@@ -16,7 +16,7 @@ export default function HowToUse() {
           <FaLeaf className="text-green-600 text-2xl mr-3 mt-1" />
           <div>
             <h3 className="font-semibold text-lg">Get Identification</h3>
-            <p>Our AI will analyze the image and provide the plant's name and details.</p>
+            <p>Our AI will analyze the image and provide the plant&apos;s name and details.</p>
           </div>
         </div>
         <div className="flex items-start">
