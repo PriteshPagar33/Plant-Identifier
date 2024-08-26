@@ -5,11 +5,24 @@ import ImageUpload from './components/ImageUpload'
 import PlantInfo from './components/PlantInfo'
 import Header from './components/Header'
 import HowToUse from './components/HowToUse'
-import Image from 'next/image';
+import Image from 'next/image'
+
+// Define the type for plant info
+interface KeyValue {
+  key: string;
+  commonName: string;
+  scientificName: string;
+  sunlight: string;
+  water: string;
+  growthRate: string;
+  origin: string;
+  description: string;
+}
 
 export default function Home() {
-  const [plantInfo, setPlantInfo] = useState(null)
-  const [uploadedImage, setUploadedImage] = useState(null)
+  // Initialize state with appropriate types
+  const [plantInfo, setPlantInfo] = useState<KeyValue | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 to-green-200 flex flex-col items-center p-4 moving-gradient">
@@ -23,12 +36,11 @@ export default function Home() {
             <Image
               src={uploadedImage}
               alt="Uploaded plant"
-              layout="responsive"  // Or 'intrinsic', 'fixed', or 'fill' depending on your use case
-              width={500}          // Replace with the actual width of your image
-              height={300}         // Replace with the actual height of your image
+              layout="responsive"
+              width={500}
+              height={300}
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
-
           </div>
         )}
         {plantInfo && <PlantInfo info={plantInfo} />}

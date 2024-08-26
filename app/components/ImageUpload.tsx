@@ -4,6 +4,12 @@ import { useState, ChangeEvent } from 'react'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { Dispatch, SetStateAction } from 'react';
+
+interface ImageUploadProps {
+  setPlantInfo: Dispatch<SetStateAction<KeyValue | null>>;
+  setUploadedImage: Dispatch<SetStateAction<string | null>>;
+}
 
 // Ensure the API Key is available
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEMINI_API_KEY;

@@ -1,6 +1,19 @@
-import { FaLeaf, FaSun, FaTint, FaSeedling, FaGlobeAmericas, FaFlask } from 'react-icons/fa'
+import { FaLeaf, FaSun, FaTint, FaSeedling, FaGlobeAmericas, FaFlask } from 'react-icons/fa';
 
-export default function PlantInfo({ info }) {
+// Define the type for the info prop
+interface PlantInfoProps {
+  info: {
+    commonName: string;
+    scientificName: string;
+    sunlight: string;
+    water: string;
+    growthRate: string;
+    origin: string;
+    description: string;
+  };
+}
+
+export default function PlantInfo({ info }: PlantInfoProps) {
   const infoCards = [
     { icon: FaLeaf, title: "Common Name", value: info.commonName },
     { icon: FaFlask, title: "Scientific Name", value: info.scientificName },
