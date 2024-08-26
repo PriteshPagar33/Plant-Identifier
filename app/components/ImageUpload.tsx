@@ -6,6 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react';
 
+// Define the type for the object with fixed keys
+interface KeyValue {
+  key: string;
+  commonName: string;
+  scientificName: string;
+  sunlight: string;
+  water: string;
+  growthRate: string;
+  origin: string;
+  description: string;
+}
+
 interface ImageUploadProps {
   setPlantInfo: Dispatch<SetStateAction<KeyValue | null>>;
   setUploadedImage: Dispatch<SetStateAction<string | null>>;
@@ -19,11 +31,6 @@ if (!apiKey) {
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
-
-// Define the type for the object with dynamic keys
-interface KeyValue {
-  [key: string]: string;
-}
 
 function extractJSON(str: string): KeyValue | null {
   // First, try to parse the entire string as JSON
@@ -46,11 +53,20 @@ function extractJSON(str: string): KeyValue | null {
   // If all else fails, attempt to create a JSON object from key-value pairs
   try {
     const lines = str.split('\n');
-    const obj: KeyValue = {};
+    const obj: KeyValue = {
+      key: '',
+      commonName: '',
+      scientificName: '',
+      sunlight: '',
+      water: '',
+      growthRate: '',
+      origin: '',
+      description: ''
+    };
     lines.forEach(line => {
       const [key, value] = line.split(':').map(s => s.trim());
       if (key && value) {
-        obj[key] = value;
+        (obj as any)[key] = value;
       }
     });
     return obj;
@@ -62,8 +78,8 @@ function extractJSON(str: string): KeyValue | null {
   return null;
 }
 
-export default function ImageUpload({ setPlantInfo, setUploadedImage }: { setPlantInfo: (info: KeyValue) => void, setUploadedImage: (image: string) => void }) {
-  const [loading, setLoading] = useState(false)
+export default function ImageUpload({ setPlantInfo, setUploadedImage }: ImageUploadProps) {
+  const [loading, setLoading] = useState(false);
 
   const handleImageInput = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -107,7 +123,7 @@ export default function ImageUpload({ setPlantInfo, setUploadedImage }: { setPla
   
       const parsedInfo = extractJSON(text);
       if (parsedInfo) {
-        setPlantInfo(parsedInfo);
+        setPlantInfo(parsedInfo); // Update plant info with parsed data
       } else {
         console.error("Failed to parse plant information. Raw text:", text);
         throw new Error("Failed to parse plant information");
@@ -120,13 +136,13 @@ export default function ImageUpload({ setPlantInfo, setUploadedImage }: { setPla
   
   const handleProcessingError = () => {
     setPlantInfo({
+      key: '', // Default values for required fields
       commonName: "Unknown",
       scientificName: "N/A",
       description: "Unable to extract plant information. Please try again.",
       origin: "N/A",
       sunlight: "N/A",
       water: "N/A",
-      soil: "N/A",
       growthRate: "N/A"
     });
   }
