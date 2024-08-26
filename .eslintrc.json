@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next",
+  "rules": {
+    "next/next/no-img-element": "off", // Disable the warning for using <img>
+    "no-console": "warn"              // Customize other rules as needed
+  }
 }
